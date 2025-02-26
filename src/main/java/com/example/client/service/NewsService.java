@@ -1,9 +1,7 @@
 package com.example.client.service;
 
 public interface NewsService {
-    public void fetchAndSaveAllNews();
+    void fetchAndSaveAllNews();
 
-    public void checkNews();
-
-//    public void saveNews(String time, String foundKeywords, String text);
+    void checkNews();
 }

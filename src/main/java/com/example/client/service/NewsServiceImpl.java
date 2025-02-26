@@ -5,18 +5,13 @@ import com.example.client.dto.NewsDTO;
 import com.example.client.entity.News;
 import com.example.client.mapper.NewsMapper;
 import com.example.client.repository.NewsRepository;
-import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -53,21 +48,6 @@ public class NewsServiceImpl implements NewsService {
             log.warn("Не получено новостей от клиента.");
         }
     }
-
-
-//    @Override
-//    @Retry(name = "newsRetry")
-//    public void fetchAndSaveAllNews() {
-//        List<NewsDTO> newsDTOs = client.getAllNews();
-//        if (newsDTOs != null && !newsDTOs.isEmpty()) {
-//            for (NewsDTO newsDTO : newsDTOs) {
-////                saveNews(newsDTO.getTime().toString(), newsDTO.getKeywords(), newsDTO.getText());
-//            }
-//            log.info("Сохранено {} новостей в базе данных.", newsDTOs.size());
-//        } else {
-//            log.warn("Не получено новостей от клиента.");
-//        }
-//    }
 
     @Scheduled(fixedRate = 300_000)  // Запускать каждые 5 минут
     public void checkNews() {
