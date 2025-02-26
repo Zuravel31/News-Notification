@@ -9,8 +9,10 @@ import com.example.client.mapper.NewsMapper;
 import com.example.client.mapper.UserMapper;
 import com.example.client.repository.NewsRepository;
 import com.example.client.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,9 +33,12 @@ public class TelegramServiceImpl implements TelegramService {
 
     private final UserRepository userRepository;
 
+    @Scheduled(fixedRate = 300_000)
+    @Transactional
     public void sendMessagesToTelegram() {
-        List<News> messages = newsRepository.findAll();
-        log.info("Found {} news messages in the database.", messages.size());
+        // Найти только те новости, которые еще не были отправлены
+        List<News> messages = newsRepository.findByIsSentFalse();
+        log.info("Found {} new news messages in the database.", messages.size());
 
         List<NewsDTO> messageDTOS = messages.stream()
                 .map(newsMapper::toDto)
@@ -48,9 +53,14 @@ public class TelegramServiceImpl implements TelegramService {
 
         for (UserDTO userDTO : userDTOS) {
             Long chatId = userDTO.getTelegramChatId();
-            for (NewsDTO messageDTO : messageDTOS) {
+            for (int i = 0; i < messages.size(); i++) {
+                News news = messages.get(i);
+                NewsDTO messageDTO = messageDTOS.get(i);
                 String message = formatMessage(messageDTO);
                 bot.sendMessage(chatId, message);
+
+                // Обновить статус отправки в базе данных
+                newsRepository.updateSentStatus(news.getId());
             }
         }
     }
@@ -65,4 +75,5 @@ public class TelegramServiceImpl implements TelegramService {
                 messageDTO.getText()
         );
     }
+
 }
