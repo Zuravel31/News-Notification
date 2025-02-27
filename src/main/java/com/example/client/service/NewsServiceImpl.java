@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,12 +35,20 @@ public class NewsServiceImpl implements NewsService {
                     .toList();
 
             for (News news : newsList) {
-                try {
-                    newsRepository.save(news);
-                    log.info("Новость сохранена: {}", news.getText());
-                } catch (DataIntegrityViolationException e) {
-                    // Пропустить дублирующуюся запись и продолжить
-                    log.warn("Пропущена дублирующаяся новость: {}", news.getText());
+                // Проверка наличия дубликата перед сохранением
+                Optional<News> existingNews = newsRepository.findByText(news.getText());
+                if (existingNews.isPresent()) {
+                    // Логика для обработки дубликата
+//                    log.warn("Пропущена дублирующаяся новость: {}", news.getText());
+                } else {
+                    // Сохранение новости
+                    try {
+                        newsRepository.save(news);
+                        log.info("Новость сохранена: {}", news.getText());
+                    } catch (DataIntegrityViolationException e) {
+                        // Обработка других возможных ошибок целостности данных
+                        log.error("Ошибка при сохранении новости: {}", news.getText(), e);
+                    }
                 }
             }
 
@@ -48,6 +57,7 @@ public class NewsServiceImpl implements NewsService {
             log.warn("Не получено новостей от клиента.");
         }
     }
+
 
     @Scheduled(fixedRate = 300_000)  // Запускать каждые 5 минут
     public void checkNews() {

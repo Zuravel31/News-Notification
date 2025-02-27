@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 
-@FeignClient(name = "messageClient", url = "https://twenty-rats-tap.loca.lt/news")
+@FeignClient(name = "messageClient", url = "https://tender-nights-feel.loca.lt/news")
 public interface NewsClient {
 
     @CircuitBreaker(name = "newsClient", fallbackMethod = "fallbackGetAllNews")

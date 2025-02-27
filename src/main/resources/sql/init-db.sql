@@ -13,3 +13,6 @@ CREATE TABLE users
     name             VARCHAR(255) NOT NULL,
     telegram_chat_id BIGINT NOT NULL UNIQUE
 );
+UPDATE newz
+SET is_sent = false
+WHERE is_sent IS NULL;
