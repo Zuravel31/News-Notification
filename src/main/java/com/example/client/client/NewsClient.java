@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-
+/**
+ * Клиент для взаимодействия с API новостей.
+ * Используется для получения списка всех новостей с удалённого сервиса.
+ */
 @FeignClient(name = "messageClient", url = "https://tender-heads-bathe.loca.lt/news")
 public interface NewsClient {
 
