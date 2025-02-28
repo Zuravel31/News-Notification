@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * сущность новости, которая хранится в базе данных.
+ * Содержит информацию о времени создания, ключевых словах, тексте новости и статусе отправки.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
