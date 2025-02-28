@@ -27,6 +27,6 @@ public class News {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-
+    @Column(name = "is_sent", nullable = false)
     private Boolean isSent;
 }

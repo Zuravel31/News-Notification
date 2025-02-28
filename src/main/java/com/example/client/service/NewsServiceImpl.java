@@ -41,6 +41,11 @@ public class NewsServiceImpl implements NewsService {
                     // Логика для обработки дубликата
 //                    log.warn("Пропущена дублирующаяся новость: {}", news.getText());
                 } else {
+                    // Установка значения для isSent, если оно не установлено
+                    if (news.getIsSent() == null) {
+                        news.setIsSent(false); // или true, в зависимости от логики
+                    }
+
                     // Сохранение новости
                     try {
                         newsRepository.save(news);

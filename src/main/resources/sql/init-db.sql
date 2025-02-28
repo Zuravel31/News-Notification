@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS newz
+CREATE TABLE if not exists newz
 (
     id       BIGSERIAL PRIMARY KEY,
     time     TIMESTAMP NULL,
@@ -13,6 +13,5 @@ CREATE TABLE users
     name             VARCHAR(255) NOT NULL,
     telegram_chat_id BIGINT NOT NULL UNIQUE
 );
-UPDATE newz
-SET is_sent = false
-WHERE is_sent IS NULL;
+-- UPDATE newz
+-- SET is_sent = false WHERE is_sent IS NULL;
