@@ -25,8 +25,6 @@ public class NewsServiceImpl implements NewsService {
 
     private final NewsClient client;
 
-//    private final Set<String> uniqueEntries = new HashSet<>();
-
     public void fetchAndSaveAllNews() {
         List<NewsDTO> newsDTOs = client.getAllNews();
         if (newsDTOs != null && !newsDTOs.isEmpty()) {
@@ -76,20 +74,6 @@ public class NewsServiceImpl implements NewsService {
             log.error("Ошибка при проверке новостей", e);
         }
     }
-
-//    public void saveNews(String time, String foundKeywords, String text) {
-//        String logMessage = time + "ч " + foundKeywords + " " + text;
-//        if (uniqueEntries.add(logMessage)) {
-//            log.info(logMessage);
-//            if (!newsRepository.existsByText(text)) {
-//                NewsDTO newsDTO = new NewsDTO();
-//                newsDTO.setTime(LocalDateTime.now());
-//                newsDTO.setKeywords(foundKeywords);
-//                newsDTO.setText(text);
-//                News newz = mapper.toEntity(newsDTO);
-//
-//            }
-//        }
-    }
+}
 
 
