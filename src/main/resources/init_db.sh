@@ -1,9 +1,9 @@
-!/bin/bash
+#!/bin/bash
 
 # Переменные для подключения к базе данных
 DB_NAME="new"
-DB_USER="your_username"  # Замените на нужный логин
-DB_PASSWORD="your_password"  # Замените на нужный пароль
+DB_USER="aleksandrtufanov"  # Замени на свой логин
+DB_PASSWORD=  # Замени на свой пароль
 DB_HOST="localhost"
 DB_PORT="5432"
 
@@ -39,4 +39,4 @@ VALUES
 ON CONFLICT (telegram_chat_id) DO NOTHING;
 EOF
 
-echo "База данных успешно инициализирована."
+echo "Успешно"
