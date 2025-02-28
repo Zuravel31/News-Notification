@@ -14,6 +14,12 @@ import java.util.List;
 @FeignClient(name = "messageClient", url = "https://tender-heads-bathe.loca.lt/news")
 public interface NewsClient {
 
+    /**
+     * Получает все новости с удалённого сервиса.
+     * Используется аннотация CircuitBreaker для обработки сбоев в случае недоступности сервиса.
+     *
+     * @return Список объектов {@link NewsDTO}, представляющих все доступные новости.
+     */
     @CircuitBreaker(name = "newsClient", fallbackMethod = "fallbackGetAllNews")
     @GetMapping("/all")
     List<NewsDTO> getAllNews();
