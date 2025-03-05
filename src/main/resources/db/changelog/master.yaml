@@ -1,0 +1,7 @@
+databaseChangeLog:
+    -   include:
+            file: classpath:db/changelog/db.changelog-v0.0-create-db.yaml
+    -   include:
+            file: classpath:db/changelog/db.changelog-v0.1-create-table-newz.yaml
+    -   include:
+            file: classpath:db/changelog/db.changelog-v0.1-create-table-user.yaml
