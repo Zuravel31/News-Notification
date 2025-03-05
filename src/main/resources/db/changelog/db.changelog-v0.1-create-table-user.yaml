@@ -1,0 +1,47 @@
+databaseChangeLog:
+    -   changeSet:
+            id: create-table-users
+            author: daniil
+            changes:
+                -   createTable:
+                        tableName: users
+                        ifNotExists: true
+                        columns:
+                            -   column:
+                                    name: id
+                                    type: BIGINT
+                                    autoIncrement: true
+                                    constraints:
+                                        primaryKey: true
+                                        nullable: false
+                            -   column:
+                                    name: name
+                                    type: VARCHAR(255)
+                            -   column:
+                                    name: telegram_chat_id
+                                    type: BIGINT
+                                    constraints:
+                                        unique: true
+
+    -   changeSet:
+            id: insert-table-users
+            author: daniil
+            changes:
+                -   insert:
+                        tableName: users
+                        columns:
+                            -   column:
+                                    name: name
+                                    value: Daneel Zhuravel
+                            -   column:
+                                    name: telegram_chat_id
+                                    value: 871004053
+                -   insert:
+                        tableName: users
+                        columns:
+                            -   column:
+                                    name: name
+                                    value: Aleksandr Tufanov
+                            -   column:
+                                    name: telegram_chat_id
+                                    value: 395819127
